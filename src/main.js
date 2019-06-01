@@ -14,7 +14,7 @@ const Counter = ({ value, onIncrement, onDecrement }) => (
 const reducer = (state = 0, action) => {
   switch (action.type) {
     case 'INCREASE':
-      return action.value;
+    return action.value;
     case 'DREASE':
       return action.value;
     default:
@@ -22,12 +22,36 @@ const reducer = (state = 0, action) => {
   }
 }
 
+// const inseValueReducer = (state = 0, action) => {
+//   switch (action.type) {
+//     case 'INCREASE':
+//       return {...state, inseValueReducer: action.inseValue};
+//     default:
+//       return state
+//   }
+// }
+
+// const decrValueReducer = (state = 0, action) => {
+//   switch (action.type) {
+//     case 'DREASE':
+//       return {...state, decrValueReducer: action.inseValue};
+//     default:
+//       return state
+//   }
+// }
+
+// const reducer = combineReducers({
+//   inseValueReducer,
+//   decrValueReducer
+// })
+
 // const store = createStore(reducer, applyMiddleware(thunk));
 const middList = [thunk];
 const store = compose(applyMiddleware(...middList))(createStore)(reducer);
 
 const increaseActions = () => {
   const currVal = store.getState();
+  // const currVal = store.getState().inseValueReducer;
   return {
     type: "INCREASE",
     value: currVal + 1
@@ -36,6 +60,7 @@ const increaseActions = () => {
 
 const decreaseActions = () => {
   const currVal = store.getState();
+  // const currVal = store.getState().decrValueReducer;
   return {
     type: "DREASE",
     value: currVal - 1
