@@ -1,6 +1,7 @@
 import React from 'react';
-import { createStore } from 'redux';
 import ReactDOM from 'react-dom';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
 
 const Counter = ({ value, onIncrement, onDecrement }) => (
   <div>
@@ -10,7 +11,7 @@ const Counter = ({ value, onIncrement, onDecrement }) => (
   </div>
 );
 
-const counterReducer = (state = 0, action) => {
+const reducer = (state = 0, action) => {
   switch (action.type) {
     case 'INCREASE':
       return action.value;
@@ -21,7 +22,9 @@ const counterReducer = (state = 0, action) => {
   }
 }
 
-const store = createStore(counterReducer);
+// const store = createStore(reducer, applyMiddleware(thunk));
+const middList = [thunk];
+const store = compose(applyMiddleware(...middList))(createStore)(reducer);
 
 const increaseActions = () => {
   const currVal = store.getState();
